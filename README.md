@@ -5,17 +5,6 @@
 
 > Vue2 Component for draggable and resizable elements.
 
-## Table of Contents
-
-* [Features](#features)
-* [Demo](#demo)
-* [Install and basic usage](#install-and-basic-usage)
-  * [Props](#props)
-  * [Events](#events)
-* [Gotchas](#gotchas)
-* [Contributing](#contributing)
-* [License](#license)
-
 ### Features
 
 * No dependencies
@@ -31,7 +20,7 @@
 
 ---
 
-## Install and basic usage
+## Install & basic usage
 
 ```bash
 $ npm install --save vue-draggable-resizable
@@ -229,17 +218,6 @@ Restricts the movement and the dimensions of the element to the parent.
 <vue-draggable-resizable :parent="true">
 ```
 
-#### maximize
-Type: `Boolean`<br>
-Required: `false`<br>
-Default: `false`
-
-If set to `true` allows the component to fill its parent when double-clicked.
-
-```html
-<vue-draggable-resizable :maximize="true">
-```
-
 ---
 
 ### Events
@@ -290,7 +268,7 @@ Parameters:
 * `width` the width of the element
 * `height` the height of the element
 
-Called whenever the component stops getting resized.
+Called whenever the component end resized.
 
 ```html
 <vue-draggable-resizable @resizestop="onResizstop">
@@ -316,7 +294,7 @@ Parameters:
 * `left` the X position of the element
 * `top` the Y position of the element
 
-Called whenever the component stops getting dragged.
+Called whenever the component end dragged.
 
 ```html
 <vue-draggable-resizable @dragstop="onDragstop">
@@ -328,7 +306,7 @@ Be careful to use appropriate values for `x`, `y`, `w`, `h`, `minh` and `minh` p
 
 ### Bonus
 
-If `resizing`, `parent` and `maximize` props are `true` you can double-click on the element to make it fill the parent.
+If `resizing` and `parent` props are both `true` you can double-click on the element to make it fill the parent.
 
 ## Contributing
 

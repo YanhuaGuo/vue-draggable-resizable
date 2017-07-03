@@ -134,15 +134,11 @@ describe('VueDraggableResizable.vue', function () {
 
   describe('Clicking events', function () {
     it('should activate the element by clicking on it', function () {
-      const activated = sinon.spy()
-
-      const vm = mount(VueDraggableResizable, {}, { activated })
+      const vm = mount(VueDraggableResizable)
 
       simulate(vm.$el, 'mousedown')
 
       expect(vm.$data.active).to.equal(true)
-
-      sinon.assert.calledWith(activated)
     })
 
     it('should show the handles if the element is active', function (done) {
@@ -157,30 +153,13 @@ describe('VueDraggableResizable.vue', function () {
     })
 
     it('should deactivate the element by clicking outside it', function () {
-      const deactivated = sinon.spy()
-
-      const vm = mount(VueDraggableResizable, {}, { deactivated })
+      const vm = mount(VueDraggableResizable)
 
       simulate(vm.$el, 'mousedown')
       expect(vm.$data.active).to.equal(true)
 
       simulate(document.documentElement, 'mousedown')
       expect(vm.$data.active).to.equal(false)
-
-      sinon.assert.calledWith(deactivated)
-    })
-
-    it('should emit "deactivated" event only once', function () {
-      const deactivated = sinon.spy()
-
-      const vm = mount(VueDraggableResizable, {}, { deactivated })
-
-      simulate(vm.$el, 'mousedown')
-
-      simulate(document.documentElement, 'mousedown')
-      simulate(document.documentElement, 'mousedown')
-
-      sinon.assert.calledOnce(deactivated)
     })
   })
 
@@ -330,13 +309,15 @@ describe('VueDraggableResizable.vue', function () {
       })
     })
 
-    it('should emit "resizestop" event while stopping resizing the element', function (done) {
+    it('should emit "resizestop" event while resiz end the element', function (done) {
+      const resizing = sinon.spy()
       const resizestop = sinon.spy()
 
       const vm = mount(VueDraggableResizable, {
         w: 100,
         h: 100
       }, {
+        resizing,
         resizestop
       })
 
@@ -355,11 +336,13 @@ describe('VueDraggableResizable.vue', function () {
           to: {pageX: fromX + 10, pageY: fromY + 10}
         }, function () {
           nextTick().then(function () {
+            sinon.assert.calledWith(resizing, 0, 0, 110, 110)
+
             simulate(vm.$el, 'mouseup')
             nextTick().then(function () {
               sinon.assert.calledWith(resizestop, 0, 0, 110, 110)
-              done()
             })
+            done()
           })
         })
       })
@@ -457,13 +440,15 @@ describe('VueDraggableResizable.vue', function () {
       })
     })
 
-    it('should emit "dragstop" event while stopping dragging the element', function (done) {
+    it('should emit "dragstop" event while drag end the element', function (done) {
+      const dragging = sinon.spy()
       const dragstop = sinon.spy()
 
       const vm = mount(VueDraggableResizable, {
         w: 100,
         h: 100
       }, {
+        dragging,
         dragstop
       })
 
@@ -478,11 +463,13 @@ describe('VueDraggableResizable.vue', function () {
           to: {pageX: 60, pageY: 60}
         }, function () {
           nextTick().then(function () {
+            sinon.assert.calledWith(dragging, 10, 10)
+
             simulate(vm.$el, 'mouseup')
             nextTick().then(function () {
               sinon.assert.calledWith(dragstop, 10, 10)
-              done()
             })
+            done()
           })
         })
       })
@@ -494,7 +481,7 @@ describe('VueDraggableResizable.vue', function () {
    *************************/
 
   describe('Double click function', function () {
-    it('should not maximize the element if parent prop is false', function (done) {
+    it('should should not maximize the element if parent prop is false', function (done) {
       const resizing = sinon.spy()
 
       const vm = mount(VueDraggableResizable, {
@@ -502,34 +489,7 @@ describe('VueDraggableResizable.vue', function () {
         y: 10,
         w: 100,
         h: 100,
-        parent: false,
-        maximize: true
-      }, {
-        resizing
-      })
-
-      simulate(vm.$el, 'dblclick')
-
-      nextTick().then(function () {
-        sinon.assert.calledOnce(resizing)
-        expect(vm.$el.style.top).to.equal('10px')
-        expect(vm.$el.style.left).to.equal('10px')
-        expect(vm.$el.style.width).to.equal('100px')
-        expect(vm.$el.style.height).to.equal('100px')
-        done()
-      })
-    })
-
-    it('should not maximize the element if maximize prop is false', function (done) {
-      const resizing = sinon.spy()
-
-      const vm = mount(VueDraggableResizable, {
-        x: 10,
-        y: 10,
-        w: 100,
-        h: 100,
-        parent: true,
-        maximize: false
+        parent: false
       }, {
         resizing
       })
