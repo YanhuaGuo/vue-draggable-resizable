@@ -1,9 +1,22 @@
 <p align="center"><img src="https://rawgit.com/mauricius/vue-draggable-resizable/master/docs/resources/logo.png" alt="logo"></p>
 <h1 align="center">VueDraggableResizable</h1>
 
+[![Latest Version on NPM](https://img.shields.io/npm/v/vue-draggable-resizable.svg?style=flat-square)](https://npmjs.com/package/vue-draggable-resizable)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![npm](https://img.shields.io/npm/dt/vue-draggable-resizable.svg?style=flat-square)](https://www.npmjs.com/package/vue-draggable-resizable)
 
 > Vue2 Component for draggable and resizable elements.
+
+## Table of Contents
+
+* [Features](#features)
+* [Demo](#demo)
+* [Install and basic usage](#install-and-basic-usage)
+  * [Props](#props)
+  * [Events](#events)
+* [Gotchas](#gotchas)
+* [Contributing](#contributing)
+* [License](#license)
 
 ### Features
 
@@ -20,7 +33,7 @@
 
 ---
 
-## Install & basic usage
+## Install and basic usage
 
 ```bash
 $ npm install --save vue-draggable-resizable
@@ -77,6 +90,17 @@ export default {
 ```
 
 ### Props
+
+#### active
+Type: `Boolean`<br>
+Required: `false`<br>
+Default: `false`
+
+Determines if the component should be active or not. The prop reacts to changes and also can be used with the `sync`[modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) to keep the state in sync with the parent.
+
+```html
+<vue-draggable-resizable :active="true">
+```
 
 #### draggable
 Type: `Boolean`<br>
@@ -166,6 +190,17 @@ Define the initial y position of the element.
 <vue-draggable-resizable :y="0">
 ```
 
+#### z
+Type: `Number|String`<br>
+Required: `false`<br>
+Default: `auto`
+
+Define the zIndex of the element.
+
+```html
+<vue-draggable-resizable :z="999">
+```
+
 #### handles
 Type: `Array`<br>
 Required: `false`<br>
@@ -193,7 +228,7 @@ Default: `both`
 Define the axis on which the element is draggable. Available values are `x`, `y` or `both`.
 
 ```html
-<vue-draggable-resizable :axis="x">
+<vue-draggable-resizable axis="x">
 ```
 
 #### grid
@@ -216,6 +251,37 @@ Restricts the movement and the dimensions of the element to the parent.
 
 ```html
 <vue-draggable-resizable :parent="true">
+```
+
+#### dragHandle
+Type: `String`<br>
+Required: `false`
+
+Defines the selector that should be used to drag the component.
+
+```html
+<vue-draggable-resizable drag-handle=".drag">
+```
+
+#### dragCancel
+Type: `String`<br>
+Required: `false`
+
+Defines a selector that should be used to prevent drag initialization.
+
+```html
+<vue-draggable-resizable drag-cancel=".drag">
+```
+
+#### maximize
+Type: `Boolean`<br>
+Required: `false`<br>
+Default: `false`
+
+If set to `true` allows the component to fill its parent when double-clicked.
+
+```html
+<vue-draggable-resizable :maximize="true">
 ```
 
 ---
@@ -268,7 +334,7 @@ Parameters:
 * `width` the width of the element
 * `height` the height of the element
 
-Called whenever the component end resized.
+Called whenever the component stops getting resized.
 
 ```html
 <vue-draggable-resizable @resizestop="onResizstop">
@@ -294,7 +360,7 @@ Parameters:
 * `left` the X position of the element
 * `top` the Y position of the element
 
-Called whenever the component end dragged.
+Called whenever the component stops getting dragged.
 
 ```html
 <vue-draggable-resizable @dragstop="onDragstop">
@@ -306,7 +372,7 @@ Be careful to use appropriate values for `x`, `y`, `w`, `h`, `minh` and `minh` p
 
 ### Bonus
 
-If `resizing` and `parent` props are both `true` you can double-click on the element to make it fill the parent.
+If `resizing`, `parent` and `maximize` props are `true` you can double-click on the element to make it fill the parent.
 
 ## Contributing
 

@@ -72,3 +72,14 @@ new Vue({
     ]
   }
 });
+
+new Vue({
+  el: '#app7',
+  data: {
+    active: false
+  }
+});
+
+new Vue({
+  el: '#app8'
+});
